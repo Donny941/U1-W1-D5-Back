@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -44,10 +45,10 @@ namespace U1_W1_D5_Back.classes
 
              MENU
 
-             1.: Register New Taxpayer & Calculate Tax
-             2.: Exit Application
+               1.: Register New Taxpayer & Calculate Tax
+               2.: Exit Application
 
-             Please select an option (1-2):
+               Please select an option (1-2):
 
              """);
 
@@ -72,15 +73,31 @@ namespace U1_W1_D5_Back.classes
 
         public void InsertData()
         {
-            FirstName = ReadInput("Name :");
-            LastName = ReadInput("Lastname :");
-            DateOfBirth = ReadInput("Birth Date :");
-            TaxID = ReadInput("TaxID :");
-            Gender = ReadInput("Gender :");
-            Residence = ReadInput("Residence :");
-            string Income = ReadInput("Annual Income :");
-            AnnualIncome = Math.Round(decimal.Parse(Income), 2);
+            try
+            {
 
+
+
+                FirstName = ReadInput(" Name :");
+                LastName = ReadInput(" Lastname :");
+                DateOfBirth = ReadInput(" Birth Date :");
+                TaxID = ReadInput(" TaxID :");
+                Gender = ReadInput(" Gender :");
+                Residence = ReadInput(" Residence :");
+                string Income = ReadInput(" Annual Income :");
+                AnnualIncome = Math.Round(decimal.Parse(Income), 2);
+
+                if (FirstName == "" || LastName == "" || DateOfBirth == "" || TaxID == "" || Gender == "" || Residence == "")
+                {
+                    throw new Exception("You must fill all fields to calculate Tax!");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Menu();
+            }
             TotalTax = CalculateTax();
             PrintTax();
         }
@@ -91,15 +108,15 @@ namespace U1_W1_D5_Back.classes
 
             Console.WriteLine($"""
                 
-                ==================================================
+                      ==================================================
 
-                Tax Calculation :
-                Taxpayer: {FirstName} {LastName},
-                Born in: {DateOfBirth} {Gender},
-                Residing in: {Residence},
-                Tax ID: {TaxID},
-                Declared Income: {AnnualIncome}
-                Tax Due: $ {TotalTax}
+                        Tax Calculation :
+                        Taxpayer: {FirstName} {LastName},
+                        Born in: {DateOfBirth} {Gender},
+                        Residing in: {Residence},
+                        Tax ID: {TaxID},
+                        Declared Income: {AnnualIncome}
+                        Tax Due: $ {TotalTax}
 
                 
                 """);
